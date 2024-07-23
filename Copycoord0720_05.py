@@ -8,14 +8,14 @@ class CopyCoordApp(ctk.CTk):
     def __init__(self):
         super().__init__()
         self.title("座標取得アプリ")
-        self.geometry("300x200")
+        self.geometry("220x150")  # ウィンドウサイズを調整
+
+        self.start_button = ctk.CTkButton(self, text="開始位置", command=self.capture_start, fg_color="#0078D4", corner_radius=10, width=180, height=40)
+        self.start_button.pack(pady=10, padx=20)
         
-        self.start_button = ctk.CTkButton(self, text="開始位置", command=self.capture_start)
-        self.start_button.pack(pady=20)
-        
-        self.end_button = ctk.CTkButton(self, text="終了位置", command=self.capture_end, state="disabled")
-        self.end_button.pack(pady=20)
-        
+        self.end_button = ctk.CTkButton(self, text="終了位置", command=self.capture_end, state="disabled", fg_color="#0078D4", corner_radius=10, width=180, height=40)
+        self.end_button.pack(pady=10, padx=20)
+
         self.start_pos = None
         self.end_pos = None
 
@@ -27,7 +27,7 @@ class CopyCoordApp(ctk.CTk):
     def capture_end(self):
         self.end_pos = self.capture_position("終了位置")
         if self.end_pos:
-            self.perform_drag_and_copy()
+            self.after(2000, self.perform_drag_and_copy)  # 2秒後にドラッグを開始
             self.show_final_result()
 
     def capture_position(self, position_type):
